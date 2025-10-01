@@ -1,0 +1,8 @@
+---
+import BaseSignature from './BaseSignature.astro';
+const { formData } = Astro.props;
+---
+
+<div id="signature-preview" class="flex justify-center my-6">
+  <BaseSignature {...formData} />
+</div>
