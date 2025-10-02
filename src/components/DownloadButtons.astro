@@ -13,35 +13,65 @@
 </button>
 
 <script>
+  // Add type declarations for external libraries
+  declare global {
+    interface Window {
+      htmlToImage?: {
+        toPng: (node: HTMLElement, options?: any) => Promise<string>;
+      };
+    }
+  }
+
   document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('download-btn')?.addEventListener('click', async () => {
-      const button = document.getElementById('download-btn');
-      const node = document.getElementById('signature-card');
+    const downloadBtn = document.getElementById('download-btn') as HTMLButtonElement | null;
+    
+    if (!downloadBtn) return;
+
+    downloadBtn.addEventListener('click', async () => {
+      const button = downloadBtn;
+      const node = document.getElementById('signature-card') as HTMLElement | null;
       
       if (!node || !window.htmlToImage) {
         alert('Error: Unable to capture signature. Please try again.');
         return;
       }
 
+      // Get the user's name for the filename
+      const nameElement = document.querySelector('[data-field="name"]') as HTMLElement | null;
+      const userName = nameElement?.textContent?.trim() || 'user';
+      const sanitizedName = userName.toLowerCase().replace(/\s+/g, '_').replace(/[^a-z0-9_]/g, '');
+      const fileName = `${sanitizedName}_email_signature.png`;
+
       // Show loading state
       button.textContent = '⏳ Generating...';
       button.disabled = true;
 
       try {
-        // Generate the image with better quality
+        // Generate the image with better quality and preserve styling
         const dataUrl = await window.htmlToImage.toPng(node, {
           quality: 1.0,
           pixelRatio: 2, // Higher resolution
-          backgroundColor: '#ffffff',
+          backgroundColor: 'transparent', // Keep original background
           style: {
             transform: 'scale(1)',
-            transformOrigin: 'top left'
-          }
+            transformOrigin: 'top left',
+            // Preserve all existing styles
+            borderRadius: node.style.borderRadius || '0.75rem',
+            boxShadow: getComputedStyle(node).boxShadow,
+            border: getComputedStyle(node).border,
+            padding: getComputedStyle(node).padding
+          },
+          filter: (element: HTMLElement) => {
+            // Include all elements (don't filter out any)
+            return true;
+          },
+          useCORS: true,
+          allowTaint: true
         });
 
         // Create download link
         const link = document.createElement('a');
-        link.download = 'romega-signature.png';
+        link.download = fileName;
         link.href = dataUrl;
         document.body.appendChild(link);
         link.click();
