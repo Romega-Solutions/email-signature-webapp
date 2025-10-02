@@ -1,5 +1,22 @@
-/* Move @import to the very top */
-@import url("https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,200..900;1,18..144,200..900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap");
+/* Keep Source Sans from Google Fonts (this one works fine) */
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap");
+
+/* Local Merriweather fonts */
+@font-face {
+  font-family: "Merriweather";
+  src: url("/src/assets/fonts/Merriweather_24pt-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "Merriweather";
+  src: url("/src/assets/fonts/Merriweather_24pt-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
 
 @tailwind base;
 @tailwind components;
@@ -56,5 +73,7 @@
   font-family: "Source Sans 3", sans-serif;
 }
 
-/* All your existing color classes remain the same... */
-/* I'll keep them as they are since they're working */
+/* Force Merriweather for specific elements */
+.font-merriweather {
+  font-family: "Merriweather", serif !important;
+}
