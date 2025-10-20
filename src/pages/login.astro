@@ -1,0 +1,144 @@
+---
+// filepath: src/pages/login.astro
+import Layout from '../layouts/Layout.astro';
+import "../styles/global.css";
+
+const error = Astro.url.searchParams.get('error');
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Romega Solutions Email Signature</title>
+</head>
+<body>
+  <div class="min-h-screen bg-gradient-to-br from-rs-primary-50 via-white to-rs-accent-50 flex items-center justify-center p-4">
+    <div class="w-full max-w-md">
+      <!-- Login Card -->
+      <div class="bg-white rounded-2xl shadow-2xl p-8 border border-rs-neutral-200">
+        <!-- Logo and Header -->
+        <div class="text-center mb-8">
+          <div class="flex justify-center mb-4">
+            <img src="/romega-logo.svg" alt="Romega Solutions" class="h-20 w-auto" />
+          </div>
+          <h1 class="font-merriweather text-2xl font-bold text-rs-primary-700 mb-2">
+            Email Signature Creator
+          </h1>
+          <p class="font-source-sans text-sm text-rs-neutral-600">
+            Authorized access only
+          </p>
+        </div>
+
+        <!-- Error Message -->
+        {error && (
+          <div class="mb-6 bg-red-50 border border-red-200 rounded-lg p-4">
+            <div class="flex items-center gap-2 text-red-700">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <span class="font-source-sans text-sm font-medium">
+                {error === 'invalid' ? 'Invalid username or password' : 'Authentication required'}
+              </span>
+            </div>
+          </div>
+        )}
+
+        <!-- Login Form -->
+        <form action="/api/login" method="POST" class="space-y-6">
+          <!-- Username Field -->
+          <div>
+            <label for="username" class="block font-source-sans text-sm font-medium text-rs-neutral-700 mb-2">
+              Username
+            </label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <svg class="h-5 w-5 text-rs-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                </svg>
+              </div>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                required
+                autocomplete="username"
+                class="w-full pl-10 pr-4 py-3 border border-rs-neutral-300 rounded-lg focus:ring-2 focus:ring-rs-primary-500 focus:border-transparent font-source-sans transition-all"
+                placeholder="Enter your username"
+              />
+            </div>
+          </div>
+
+          <!-- Password Field -->
+          <div>
+            <label for="password" class="block font-source-sans text-sm font-medium text-rs-neutral-700 mb-2">
+              Password
+            </label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <svg class="h-5 w-5 text-rs-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                </svg>
+              </div>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                required
+                autocomplete="current-password"
+                class="w-full pl-10 pr-4 py-3 border border-rs-neutral-300 rounded-lg focus:ring-2 focus:ring-rs-primary-500 focus:border-transparent font-source-sans transition-all"
+                placeholder="Enter your password"
+              />
+            </div>
+          </div>
+
+          <!-- Remember Me -->
+          <div class="flex items-center">
+            <input
+              type="checkbox"
+              id="remember"
+              name="remember"
+              class="h-4 w-4 text-rs-primary-500 focus:ring-rs-primary-500 border-rs-neutral-300 rounded"
+            />
+            <label for="remember" class="ml-2 block font-source-sans text-sm text-rs-neutral-700">
+              Keep me logged in for 7 days
+            </label>
+          </div>
+
+          <!-- Login Button -->
+          <button
+            type="submit"
+            class="w-full bg-rs-primary-500 hover:bg-rs-primary-600 text-white font-source-sans font-semibold py-3 px-4 rounded-lg transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200"
+          >
+            Sign In
+          </button>
+        </form>
+
+        <!-- Security Notice -->
+        <div class="mt-6 pt-6 border-t border-rs-neutral-200">
+          <div class="flex items-start gap-2 text-xs text-rs-neutral-500 font-source-sans">
+            <svg class="w-4 h-4 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+            </svg>
+            <p>
+              This application is for authorized Romega Solutions team members only. 
+              Unauthorized access is prohibited. Contact IT if you need access credentials.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="text-center mt-6">
+        <p class="font-source-sans text-sm text-rs-neutral-600">
+          Need help? Contact 
+          <a href="mailto:it@romega-solutions.com" class="text-rs-primary-600 hover:text-rs-primary-700 font-medium">
+            IT Support
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

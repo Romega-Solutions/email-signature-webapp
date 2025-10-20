@@ -31,16 +31,29 @@ const defaultData = {
           </div>
         </div>
         
-        <!-- Quick Reference Button -->
-        <a 
-          href="https://docs.google.com/spreadsheets/d/1S9SjoZQrfeu6k21rixZkoLuZ7tSzbdfsCiWgZ9bpK9I/edit?gid=0#gid=0"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="bg-rs-accent-500 hover:bg-rs-accent-600 text-white px-4 py-2 rounded-lg font-source-sans font-medium transition-colors flex items-center gap-2"
-        >
-          <i data-lucide="users" class="w-4 h-4"></i>
-          Team Directory
-        </a>
+        <div class="flex items-center gap-3">
+          <!-- Quick Reference Button -->
+          <a 
+            href="https://docs.google.com/spreadsheets/d/1S9SjoZQrfeu6k21rixZkoLuZ7tSzbdfsCiWgZ9bpK9I/edit?gid=0#gid=0"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="bg-rs-accent-500 hover:bg-rs-accent-600 text-white px-4 py-2 rounded-lg font-source-sans font-medium transition-colors flex items-center gap-2"
+          >
+            <i data-lucide="users" class="w-4 h-4"></i>
+            Team Directory
+          </a>
+
+          <!-- Logout Button -->
+          <form action="/api/logout" method="POST" class="inline-block">
+            <button
+              type="submit"
+              class="bg-rs-neutral-200 hover:bg-rs-neutral-300 text-rs-neutral-700 px-4 py-2 rounded-lg font-source-sans font-medium transition-colors flex items-center gap-2"
+            >
+              <i data-lucide="log-out" class="w-4 h-4"></i>
+              Logout
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
